@@ -7,12 +7,12 @@ class EventManager
   def initialize
     puts "EventManager Initialized."
     filename = "event_attendees.csv"
-    @file = CSV.open(filename, {:headers => true})
+    @file = CSV.open(filename, {:headers => true, :header_converters => :symbol})
   end
 
   def print_names
     @file.each do |line|
-      puts "#{line["first_Name"]} #{line["last_Name"]}"
+      puts "#{line[:first_name]} #{line[:last_name]}"
     end
   end
 
