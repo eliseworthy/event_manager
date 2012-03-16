@@ -51,10 +51,15 @@ class EventManager
     if original.nil?
         result = "00000" #If it's nil, it's junk
     elsif original.length < 5
-      while original.length < 5
-        original = "0" + original
-      end
-      result = original
+      # Added 0's with a while loop
+      # while original.length < 5
+      #   original = "0" + original
+      # end
+      # result = original
+      
+      # Added 0's by calculating number of missing 0's
+      missing_zeros = 5 - original.length
+      result = "#{0 * missing_zeros}#{original}"
     else
       result = original
     end
