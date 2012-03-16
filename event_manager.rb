@@ -77,11 +77,14 @@ class EventManager
     output = CSV.open("event_attendees_clean.csv", "w")
     @file.each do |line|
       
+      #first line of CSV is 2
       if @file.lineno == 2
         output << line.headers
       else
       end
 
+      line[:homephone] = clean_number(line[:homephone])
+      line[:zipcode] = clean_zipcode(line[:zipcode])
       output << line
     end
   end
