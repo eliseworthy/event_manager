@@ -20,10 +20,18 @@ class EventManager
     @file.each do |line|
       number = line[:homephone]
       clean_number = number.delete "." " " "(" ")" "-"
-      # clean_number = clean_number.delete(" ")
-      # clean_number = clean_number.delete("(")
-      # clean_number = clean_number.delete(")")
-      # clean_number = clean_number.delete("-")
+      
+      if clean_number.length == 10
+        #do nothing
+      elsif clean_number.length == 11
+        if clean_number.start_with?("1")
+          clean_number = clean_number[1..-1]
+        else
+          clean_number = "0000000000"
+        end
+      else
+        clean_number = "0000000000"
+      end
       puts clean_number
     end
   end
