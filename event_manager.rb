@@ -5,6 +5,8 @@ require "csv"
 class EventManager
   def initialize
     puts "EventManager Initialized."
+    filename = "event_attendees.csv"
+    @file = CSV.open(filename)
   end
 end
 
