@@ -15,9 +15,15 @@ class EventManager
       puts "#{line[:first_name]} #{line[:last_name]}"
     end
   end
+  
+  def print_numbers
+    @file.each do |line|
+      puts "#{line[:homephone]}"
+    end
+  end
 
 end
 
 #Script
 manager = EventManager.new
-manager.print_names
+manager.print_numbers
