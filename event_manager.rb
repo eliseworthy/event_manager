@@ -73,8 +73,21 @@ class EventManager
     return result
   end
 
+  def output_data
+    output = CSV.open("event_attendees_clean.csv", "w")
+    @file.each do |line|
+      
+      if @file.lineno == 2
+        output << line.headers
+      else
+      end
+
+      output << line
+    end
+  end
+
 end
 
 #Script
 manager = EventManager.new
-manager.print_zipcodes
+manager.output_data
