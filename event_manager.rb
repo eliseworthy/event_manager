@@ -18,7 +18,13 @@ class EventManager
   
   def print_numbers
     @file.each do |line|
-      puts "#{line[:homephone]}"
+      number = line[:homephone]
+      clean_number = number.delete "." " " "(" ")" "-"
+      # clean_number = clean_number.delete(" ")
+      # clean_number = clean_number.delete("(")
+      # clean_number = clean_number.delete(")")
+      # clean_number = clean_number.delete("-")
+      puts clean_number
     end
   end
 
