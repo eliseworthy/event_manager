@@ -3,6 +3,7 @@ require "csv"
 
 #Class Definitions
 class EventManager
+  INVALID_ZIPCODE = "00000"
 
   def initialize
     puts "EventManager Initialized."
@@ -49,7 +50,7 @@ class EventManager
 
   def clean_zipcode(original)
     if original.nil?
-        result = "00000" #If it's nil, it's junk
+        result = INVALID_ZIPCODE
     elsif original.length < 5
       # Added 0's with a while loop
       # while original.length < 5
@@ -58,12 +59,14 @@ class EventManager
       # result = original
       
       # Added 0's by calculating number of missing 0's
-      # missing_zeros = 5 - original.length
-      # result = "#{0 * missing_zeros}#{original}"
+      missing_zeros = 5 - original.length
+      result = "#{0 * missing_zeros}#{original}"
 
       # Added a fixed number of zeros to front, then trimmed
-      original = "000" + original
-      result = original[-5..-1]
+      # original = "000" + original
+      # result = original[-5..-1]
+
+      #Not sure how to buffer the string to a certain length with a method from the String API
     else
       result = original
     end
