@@ -58,8 +58,12 @@ class EventManager
       # result = original
       
       # Added 0's by calculating number of missing 0's
-      missing_zeros = 5 - original.length
-      result = "#{0 * missing_zeros}#{original}"
+      # missing_zeros = 5 - original.length
+      # result = "#{0 * missing_zeros}#{original}"
+
+      # Added a fixed number of zeros to front, then trimmed
+      original = "000" + original
+      result = original[-5..-1]
     else
       result = original
     end
