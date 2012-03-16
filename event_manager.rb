@@ -23,6 +23,13 @@ class EventManager
     end
   end
 
+  def print_zipcodes
+    @file.each do |line|
+      zipcode = clean_zipcode(line[:zipcode])
+      puts zipcode
+    end
+  end
+
   def clean_number(original)
       number = original.delete "." " " "(" ")" "-"
       
@@ -40,9 +47,22 @@ class EventManager
     return number
   end
 
+  def clean_zipcode(original)
+    if original.nil?
+        result = "00000" #If it's nil, it's junk
+    elsif original.length < 5
+      while original.length < 5
+        original = "0" + original
+      end
+      result = original
+    else
+      result = original
+    end
+    return result
+  end
 
 end
 
 #Script
 manager = EventManager.new
-manager.print_numbers
+manager.print_zipcodes
