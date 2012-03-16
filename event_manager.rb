@@ -5,9 +5,8 @@ require "csv"
 class EventManager
   INVALID_ZIPCODE = "00000"
 
-  def initialize
+  def initialize(filename)
     puts "EventManager Initialized."
-    filename = "event_attendees.csv"
     @file = CSV.open(filename, {:headers => true, :header_converters => :symbol})
   end
 
@@ -73,8 +72,8 @@ class EventManager
     return result
   end
 
-  def output_data
-    output = CSV.open("event_attendees_clean.csv", "w")
+  def output_data(filename)
+    output = CSV.open(filename, "w")
     @file.each do |line|
       
       #first line of CSV is 2
@@ -92,5 +91,5 @@ class EventManager
 end
 
 #Script
-manager = EventManager.new
-manager.output_data
+manager = EventManager.new("event_attendees.csv")
+manager.output_data("event_attendees_clean.csv")
