@@ -1,9 +1,13 @@
 #Dependencies
 require "csv"
+require "sunlight"
 
 #Class Definitions
 class EventManager
   INVALID_ZIPCODE = "00000"
+  INVALID_PHONE = "0000000000"
+  Sunlight::Base.api_key = "e179a6973728c4dd3fb1204283aaccb5"
+
 
   def initialize(filename)
     puts "EventManager Initialized."
@@ -39,10 +43,10 @@ class EventManager
         if number.start_with?("1")
           number = number[1..-1]
         else
-          number = "0000000000"
+          number = INVALID_PHONE
         end
       else
-        number = "0000000000"
+        number = INVALID_PHONE
       end
     return number
   end
@@ -88,8 +92,48 @@ class EventManager
     end
   end
 
+  def rep_lookup
+    20.times do
+      line = @file.readline
+
+      representative = "unknown"
+      #api lookup
+
+      legislators = Sunlight::Legislator.all_in_zipcode(clean_zipcode(line[:zipcode]))
+      
+      names = legislators.collect do |legislator|
+        suffix = legislator.name_suffix
+        first_initial = legislator.firstname[0] 
+        last_name = legislator.lastname
+        party = legislator.party
+        suffix + " " + first_initial + "." + last_name + " (" + party + ")"
+      end
+
+      puts "#{line[:last_name]}, #{line[:first_name]}, #{line[:zipcode]}, #{names.join(", ")}"
+    end
+  end
+
+  def create_form_letters
+    letter = File.open("form_letter.html", "r").read
+    20.times do |line|
+      line = @file.readline
+
+      custom_letter = letter.gsub("#first_name",line[:first_name])
+      custom_letter = custom_letter.gsub("#last_name",line[:last_name])
+      custom_letter = custom_letter.gsub("#street",line[:street])
+      custom_letter = custom_letter.gsub("#city",line[:city])
+      custom_letter = custom_letter.gsub("#state",line[:state])
+      custom_letter = custom_letter.gsub("#zipcode",line[:zipcode])
+
+      filename = "output/thanks_#{line[:last_name]}_#{line[:first_name]}.html"
+      output = File.new(filename, "w")
+      output.write(custom_letter)
+    end
+  end
+
+
 end
 
 #Script
 manager = EventManager.new("event_attendees.csv")
-manager.output_data("event_attendees_clean.csv")
+manager.create_form_letters
