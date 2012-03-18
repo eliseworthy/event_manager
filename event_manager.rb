@@ -143,8 +143,21 @@ class EventManager
     hours.each_with_index{|counter,hour| puts "#{hour}\t#{counter}"}
   end
 
+  def day_stats
+    days = Array.new(7){0}
+    @file.each do |line|
+     date_of_reg = line[:regdate].split(" ")
+     date_of_reg = date_of_reg[0] 
+     date = Date.strptime(date_of_reg, "%m/%d/%Y")
+     day_of_week = date.wday
+
+     days[day_of_week.to_i] = days[day_of_week.to_i] + 1
+    end
+    days.each_with_index{|counter,day_of_week| puts "#{day_of_week}\t#{counter}"}
+  end
+
 end
 
 #Script
 manager = EventManager.new("event_attendees.csv")
-manager.rank_times
+manager.day_stats
