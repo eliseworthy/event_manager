@@ -131,9 +131,20 @@ class EventManager
     end
   end
 
+  def rank_times
+    hours = Array.new(24){0}
+    @file.each do |line|
+     time = line[:regdate].split(" ")
+     time = time[1].split(":")
+     hour = time[0]
+
+     hours[hour.to_i] = hours[hour.to_i] + 1
+    end
+    hours.each_with_index{|counter,hour| puts "#{hour}\t#{counter}"}
+  end
 
 end
 
 #Script
 manager = EventManager.new("event_attendees.csv")
-manager.create_form_letters
+manager.rank_times
