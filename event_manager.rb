@@ -171,11 +171,21 @@ class EventManager
     state_data.each do |state,counter|
       puts "#{state}: #{counter}"
     end
+    state_data
   end
 
+  def alpha_with_rank
+    state_data = state_stats
+    ranks = state_data.sort_by{|state, counter| -counter}.collect{|state, counter| state}
+    state_data = state_data.select{|state, counter| state}.sort_by{|state, counter| state}
+
+    state_data.each do |state, counter|
+      puts "#{state}:\t#{counter}\t(#{ranks.index(state) + 1})"
+    end
+  end
 
 end
 
 #Script
 manager = EventManager.new("event_attendees.csv")
-manager.state_stats
+manager.alpha_with_rank
