@@ -156,8 +156,26 @@ class EventManager
     days.each_with_index{|counter,day_of_week| puts "#{day_of_week}\t#{counter}"}
   end
 
+  def state_stats
+    state_data = {}
+    @file.each do |line|
+      state = line[:state]
+      if state_data[state].nil?
+        state_data[state] = 1
+      else
+        state_data[state] = state_data[state] + 1
+      end
+    end
+
+    state_data = state_data.select{|state,counter| state}.sort_by{|state, counter| state unless state.nil?}
+    state_data.each do |state,counter|
+      puts "#{state}: #{counter}"
+    end
+  end
+
+
 end
 
 #Script
 manager = EventManager.new("event_attendees.csv")
-manager.day_stats
+manager.state_stats
