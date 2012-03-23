@@ -2,7 +2,7 @@ class Attendee
   INVALID_PHONE = "0000000000"
   INVALID_ZIPCODE = "00000"
 
-  attr_accessor :regdate, :first_name, :last_name, :email, :zipcode, :city, :state, :address, :homephone
+  attr_accessor :regdate, :first_name, :last_name, :email, :zipcode, :city, :state, :street, :homephone
 
   def initialize(attributes)
     self.regdate = attributes[:regdate]
@@ -12,7 +12,7 @@ class Attendee
     self.zipcode = attributes[:zipcode]
     self.city = attributes[:city]
     self.state = attributes[:state]
-    self.address = attributes[:street]
+    self.street = attributes[:street]
     self.homephone = attributes[:homephone]
   end
 
@@ -42,7 +42,7 @@ class Attendee
     number = "(#{number[0..2]}) #{number[3..5]}-#{number[6..-1]}"
     
     return number
-    
+
   end
 
   def clean_zipcode(original)
