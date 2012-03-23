@@ -25,7 +25,7 @@ class Attendee
   end
 
   def clean_number(original)
-      number = original.delete "." " " "(" ")" "-"
+    number = original.delete "." " " "(" ")" "-"
       
       if number.length == 10
         #do nothing
@@ -38,7 +38,11 @@ class Attendee
       else
         number = INVALID_PHONE
       end
+
+    number = "(#{number[0..2]}) #{number[3..5]}-#{number[6..-1]}"
+    
     return number
+    
   end
 
   def clean_zipcode(original)

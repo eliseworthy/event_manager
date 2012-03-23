@@ -146,4 +146,4 @@ end
 
 #Script
 manager = EventManager.new("event_attendees.csv")
-manager.print_zipcodes
+manager.print_numbers
